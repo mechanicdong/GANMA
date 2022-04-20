@@ -26,6 +26,9 @@
 		DD176E8A280E615E006FCD51 /* RankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD176E89280E615E006FCD51 /* RankingViewModel.swift */; };
 		DD176E8C280E6168006FCD51 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD176E8B280E6168006FCD51 /* DrawerViewController.swift */; };
 		DD176E8E280E6170006FCD51 /* DrawerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD176E8D280E6170006FCD51 /* DrawerViewModel.swift */; };
+		DD6032CF281009C800514A44 /* MenuScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6032CE281009C800514A44 /* MenuScrollView.swift */; };
+		DD6032D128100AEC00514A44 /* MenuDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6032D028100AEC00514A44 /* MenuDataModel.swift */; };
+		DD6032D428100BEB00514A44 /* BaseScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6032D328100BEB00514A44 /* BaseScrollView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +49,9 @@
 		DD176E89280E615E006FCD51 /* RankingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewModel.swift; sourceTree = "<group>"; };
 		DD176E8B280E6168006FCD51 /* DrawerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
 		DD176E8D280E6170006FCD51 /* DrawerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerViewModel.swift; sourceTree = "<group>"; };
+		DD6032CE281009C800514A44 /* MenuScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScrollView.swift; sourceTree = "<group>"; };
+		DD6032D028100AEC00514A44 /* MenuDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDataModel.swift; sourceTree = "<group>"; };
+		DD6032D328100BEB00514A44 /* BaseScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +93,7 @@
 				DD176E79280E5A56006FCD51 /* TabBarController.swift */,
 				DD176E7B280E5CB6006FCD51 /* HomeViewController.swift */,
 				DD176E7F280E5E82006FCD51 /* HomeViewModel.swift */,
+				DD6032D228100AF100514A44 /* MenuScroll */,
 				DD176E7D280E5E74006FCD51 /* PublishViewController.swift */,
 				DD176E81280E5E8D006FCD51 /* PublishViewModel.swift */,
 				DD176E83280E6103006FCD51 /* FinishViewController.swift */,
@@ -100,6 +107,16 @@
 				DD176E63280E583D006FCD51 /* Info.plist */,
 			);
 			path = GANMA;
+			sourceTree = "<group>";
+		};
+		DD6032D228100AF100514A44 /* MenuScroll */ = {
+			isa = PBXGroup;
+			children = (
+				DD6032D328100BEB00514A44 /* BaseScrollView.swift */,
+				DD6032CE281009C800514A44 /* MenuScrollView.swift */,
+				DD6032D028100AEC00514A44 /* MenuDataModel.swift */,
+			);
+			path = MenuScroll;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,8 +200,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD176E8A280E615E006FCD51 /* RankingViewModel.swift in Sources */,
+				DD6032D128100AEC00514A44 /* MenuDataModel.swift in Sources */,
 				DD176E7E280E5E74006FCD51 /* PublishViewController.swift in Sources */,
 				DD176E80280E5E82006FCD51 /* HomeViewModel.swift in Sources */,
+				DD6032D428100BEB00514A44 /* BaseScrollView.swift in Sources */,
 				DD176E7A280E5A56006FCD51 /* TabBarController.swift in Sources */,
 				DD176E82280E5E8D006FCD51 /* PublishViewModel.swift in Sources */,
 				DD176E8C280E6168006FCD51 /* DrawerViewController.swift in Sources */,
@@ -192,6 +211,7 @@
 				DD176E8E280E6170006FCD51 /* DrawerViewModel.swift in Sources */,
 				DD176E88280E6156006FCD51 /* RankingViewController.swift in Sources */,
 				DD176E84280E6103006FCD51 /* FinishViewController.swift in Sources */,
+				DD6032CF281009C800514A44 /* MenuScrollView.swift in Sources */,
 				DD176E58280E583C006FCD51 /* SceneDelegate.swift in Sources */,
 				DD176E7C280E5CB6006FCD51 /* HomeViewController.swift in Sources */,
 				DD176E86280E6119006FCD51 /* FinishViewModel.swift in Sources */,
