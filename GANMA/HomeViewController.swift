@@ -17,10 +17,8 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .systemBackground
         setNavigationController()
         
-        self.addChild(menu)
-        self.view.addSubview(menu.view)
-        self.view.addConstraints(menu.view.constraints)
-        menu.didMove(toParent: self)
+//        self.addChild(menu)
+//        self.view.addSubview(menu.view)
     }
     
     func setNavigationController() {

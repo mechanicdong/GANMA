@@ -22,8 +22,7 @@ class MenuScrollCollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        currentPage = 0
-        setupDataSource()
+        setupDataSource() // 1
         setupViewControllers()
         addSubViews()
         layout()
@@ -32,24 +31,26 @@ class MenuScrollCollectionViewController: UIViewController {
         setViewControllersInPageVC()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        currentPage = 0        
+    }
+    
     private func bind(oldValue: Int, newValue: Int) {
         //collectionView에서 선택한 경우
         let direction: UIPageViewController.NavigationDirection = oldValue < newValue ? .forward : .reverse
-        pageViewController.setViewControllers([dataSourceVC[currentPage]], direction: direction, animated: true)
+        pageViewController.setViewControllers([dataSourceVC[currentPage]], direction: direction, animated: true, completion: nil)
         
         //pageViewController에서 paging한 경우
         collectionView.selectItem(at: IndexPath(item: currentPage, section: 0), animated: true, scrollPosition: .centeredHorizontally)
     }
     
     private func setupDataSource() {
-        for i in 0..<10 {
+        for i in 0...10 {
             let model = MenuScrollCollectionViewModel(title: i)
             dataSource += [model]
         }
-    }
-    
-    private func registerCell() {
-        collectionView.register(MenuScrollCollectionViewCell.self, forCellWithReuseIdentifier: MenuScrollCollectionViewCell.id)
     }
     
     private func setupViewControllers() {
@@ -94,6 +95,8 @@ class MenuScrollCollectionViewController: UIViewController {
     
     private func addSubViews() {
         view.addSubview(collectionView)
+        addChild(pageViewController)
+        view.addSubview(pageViewController.view)
     }
     
     private func layout() {
@@ -119,14 +122,18 @@ class MenuScrollCollectionViewController: UIViewController {
         pageViewController.dataSource = self
     }
     
+    private func registerCell() {
+        collectionView.register(MenuScrollCollectionViewCell.self, forCellWithReuseIdentifier: MenuScrollCollectionViewCell.id)
+    }
+    
     private func setViewControllersInPageVC() {
         if let firstVC = dataSourceVC.first {
-            pageViewController.setViewControllers([firstVC], direction: .forward, animated: true)
+            pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
         }
     }
     
-    func didtapCell(at indexPath: IndexPath) {
-        currentPage = indexPath.row
+    func didTapCell(at indexPath: IndexPath) {
+        currentPage = indexPath.item
     }
 }
 
@@ -139,18 +146,15 @@ extension MenuScrollCollectionViewController: UICollectionViewDelegate, UICollec
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MenuScrollCollectionViewCell.id, for: indexPath)
         
         if let cell = cell as? MenuScrollCollectionViewCell {
-            cell.model = dataSource[indexPath.row]
+            cell.model = dataSource[indexPath.item]
             
-            cell.contentsView.rx
-                .tapGesture(configuration: .none)
+            cell.contentsView.rx.tapGesture(configuration: .none)
                 .when(.recognized)
                 .asDriver { _ in .never() }
-                .drive(onNext: { _ in
-                    self.didtapCell(at: indexPath)
-                })
-                .disposed(by: cell.disposeBag)
+                .drive(onNext: { [weak self] _ in
+                    self?.didTapCell(at: indexPath)
+                }).disposed(by: cell.disposeBag)
         }
-        
         return cell
     }
 }
@@ -162,7 +166,7 @@ extension MenuScrollCollectionViewController: UICollectionViewDelegateFlowLayout
     }
 }
 
-extension MenuScrollCollectionViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+extension MenuScrollCollectionViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let index = dataSourceVC.firstIndex(of: viewController) else { return nil }
         let previousIndex = index - 1
@@ -185,7 +189,6 @@ extension MenuScrollCollectionViewController: UIPageViewControllerDelegate, UIPa
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         guard let currentVC = pageViewController.viewControllers?.first,
               let currentIndex = dataSourceVC.firstIndex(of: currentVC) else { return }
-        
         currentPage = currentIndex
     }
 }

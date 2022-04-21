@@ -66,6 +66,4 @@ class MenuScrollCollectionViewCell: UICollectionViewCell {
     private func bind() {
         titleLabel.text = "\(model?.title ?? 0)"
     }
-    
-    
 }

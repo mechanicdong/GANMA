@@ -22,7 +22,9 @@ class TabBarController: UITabBarController {
     }()
     
     private lazy var publishViewController: UIViewController = {
-        let viewController = PublishViewController()
+        //let viewController = PublishViewController()
+        let viewController = UINavigationController(rootViewController: MenuScrollCollectionViewController())
+        
         let tabBarItem = UITabBarItem(
             title: "연재",
             image: UIImage(systemName: "calendar.badge.clock"),
