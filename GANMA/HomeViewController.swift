@@ -16,9 +16,7 @@ final class HomeViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         setNavigationController()
-        
-        configure()
-        insertDataSource()        
+ 
     }
     
     func setNavigationController() {
@@ -59,23 +57,6 @@ final class HomeViewController: UIViewController {
         return rightItem
     }()
     
-    lazy var menuScrollView: MenuScrollView = {
-        let view = MenuScrollView()
-        
-        return view
-    }()
-    
-    private func configure() {
-        view.addSubview(menuScrollView)
-        
-        menuScrollView.snp.makeConstraints {
-            $0.center.width.equalToSuperview()
-            $0.height.equalToSuperview()
-        }
-    }
-    
-    private func insertDataSource() {
-        menuScrollView.dataSource = Mocks.getDataSource()
-    }
+
 
 }
