@@ -16,7 +16,11 @@ final class HomeViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         setNavigationController()
- 
+        
+        self.addChild(menu)
+        self.view.addSubview(menu.view)
+        self.view.addConstraints(menu.view.constraints)
+        menu.didMove(toParent: self)
     }
     
     func setNavigationController() {
@@ -25,6 +29,12 @@ final class HomeViewController: UIViewController {
         containerView.addSubview(topTitle)
         self.navigationItem.titleView = containerView
     }
+    
+    lazy var menu: UIViewController = {
+        let menu = MenuScrollCollectionViewController()
+        
+        return menu
+    }()
     
     lazy var containerView: UIView = {
         let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 36))
