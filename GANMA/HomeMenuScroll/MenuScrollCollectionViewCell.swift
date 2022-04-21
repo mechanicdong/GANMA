@@ -17,15 +17,16 @@ class MenuScrollCollectionViewCell: UICollectionViewCell {
     
     lazy var contentsView: UIView = {
         let view = UIView()
-        view.backgroundColor = .orange.withAlphaComponent(0.5) //default
+        view.backgroundColor = .gray.withAlphaComponent(0.5) //default
         
         return view
     }()
     
-    lazy var titleLabel: UILabel = {
-        let titleLabel = UILabel()
+    var button: UIButton = {
+        let button = UIButton()
         
-        return titleLabel
+        
+        return button
     }()
     
     override init(frame: CGRect) {
@@ -37,7 +38,7 @@ class MenuScrollCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            contentsView.backgroundColor = isSelected ? .orange : .orange.withAlphaComponent(0.5)
+            contentsView.backgroundColor = isSelected ? .white : .gray.withAlphaComponent(0.5)
         }
     }
     
@@ -47,23 +48,40 @@ class MenuScrollCollectionViewCell: UICollectionViewCell {
     
     private func addSubViews() {
         addSubview(contentsView)
-        contentsView.addSubview(titleLabel)
+        contentsView.addSubview(button)
     }
     
     private func configure() {
-        backgroundColor = .brown
+        backgroundColor = .white
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
+        button.setUnderline()
+        //TODO: 버튼 탭 활성화하기(ScrollView & Button)
+        button.titleLabel?.adjustsFontForContentSizeCategory = true
         
         contentsView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(20)
+            $0.top.bottom.equalToSuperview().inset(5)
             $0.leading.trailing.equalToSuperview()
         }
         
-        titleLabel.snp.makeConstraints {
+        button.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
     }
     
     private func bind() {
-        titleLabel.text = "\(model?.title ?? 0)"
+        button.setTitle("\(model?.titles ?? "")", for: .normal)
+    }
+}
+
+extension UIButton {
+    func setUnderline() {
+        guard let title = title(for: .normal) else { return }
+        let attributedString = NSMutableAttributedString(string: title)
+        attributedString.addAttribute(.underlineStyle,
+                                      value: NSUnderlineStyle.single.rawValue,
+                                      range: NSRange(location: 0, length: title.count)
+        )
+        setAttributedTitle(attributedString, for: .normal)
     }
 }

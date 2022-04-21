@@ -17,14 +17,19 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .systemBackground
         setNavigationController()
         
-//        self.addChild(menu)
-//        self.view.addSubview(menu.view)
+        self.addChild(menu)
+        self.view.addSubview(menu.view)
+        didMove(toParent: self)
     }
     
     func setNavigationController() {
+        
+        navigationItem.largeTitleDisplayMode = .never
+        
         containerView.addSubview(leftItem)
         containerView.addSubview(rightItem)
         containerView.addSubview(topTitle)
+
         self.navigationItem.titleView = containerView
     }
     
@@ -36,30 +41,30 @@ final class HomeViewController: UIViewController {
     
     lazy var containerView: UIView = {
         let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 36))
-
+        
         return containerView
     }()
     
     lazy var topTitle: UILabel = {
-        let topTitle = UILabel(frame: CGRect(x: 0, y: -35, width: 200, height: 18))
+        let topTitle = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 18))
         topTitle.numberOfLines = 1
         topTitle.textAlignment = .center
         topTitle.font = .systemFont(ofSize: 25, weight: .bold)
         topTitle.textColor = .systemYellow
-        topTitle.text = "GANMA!"
+        topTitle.text = "hoho!"
         
         return topTitle
     }()
     
     lazy var leftItem: UIButton = {
-        let leftItem = UIButton(frame: CGRect(x: -180, y: -35, width: 200, height: 18))
+        let leftItem = UIButton(frame: CGRect(x: -180, y: 0, width: 200, height: 18))
         leftItem.setImage(UIImage(systemName: "mail"), for: .normal)
         
         return leftItem
     }()
     
     lazy var rightItem: UIButton = {
-        let rightItem = UIButton(frame: CGRect(x: 180, y: -35, width: 200, height: 18))
+        let rightItem = UIButton(frame: CGRect(x: 180, y: 0, width: 200, height: 18))
         rightItem.setImage(UIImage(systemName: "rectangle.badge.person.crop"), for: .normal)
         
         return rightItem

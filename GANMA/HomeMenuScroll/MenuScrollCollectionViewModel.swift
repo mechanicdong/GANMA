@@ -8,5 +8,6 @@
 import Foundation
 
 struct MenuScrollCollectionViewModel {
-    let title: Int
+    //let title: Int //index로 구분
+    let titles: String        
 }

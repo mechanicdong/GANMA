@@ -13,6 +13,10 @@ import RxGesture
 class MenuScrollCollectionViewController: UIViewController {
     var dataSource:  [MenuScrollCollectionViewModel] = []
     var dataSourceVC: [UIViewController] = []
+    let titles = ["TOP", "신작", "소년만화", "판타지", "일상", "이세계", "액션", "호러", "연애"]
+    
+    let homeVC = HomeViewController()
+    //Page observer
     var currentPage: Int = 0 {
         didSet {
             bind(oldValue: oldValue, newValue: currentPage)
@@ -47,8 +51,8 @@ class MenuScrollCollectionViewController: UIViewController {
     }
     
     private func setupDataSource() {
-        for i in 0...10 {
-            let model = MenuScrollCollectionViewModel(title: i)
+        for i in 0..<titles.count {
+            let model = MenuScrollCollectionViewModel(titles: titles[i])
             dataSource += [model]
         }
     }
@@ -67,7 +71,7 @@ class MenuScrollCollectionViewController: UIViewController {
             label.text = "\(i)"
             label.font = .systemFont(ofSize: 15, weight: .bold)
             i += 1
-            
+
             vc.view.addSubview(label)
             label.snp.makeConstraints {
                 $0.center.equalToSuperview()
@@ -82,7 +86,7 @@ class MenuScrollCollectionViewController: UIViewController {
         flowLayout.scrollDirection = .horizontal
         
         let view = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .white
         
         return view
     }()
@@ -103,12 +107,13 @@ class MenuScrollCollectionViewController: UIViewController {
         collectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(96)
+            $0.height.equalTo(48)
         }
         
         pageViewController.view.snp.makeConstraints {
             $0.top.equalTo(collectionView.snp.bottom)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
         pageViewController.didMove(toParent: self)
