@@ -22,11 +22,19 @@ class MenuScrollCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    var button: UIButton = {
-        let button = UIButton()
+//    var button: UIButton = {
+//        let button = UIButton()
+//
+//        return button
+//    }()
+    
+    //TODO: Segment Control without Button
+    var segment: UISegmentedControl = { //UIControl < UIView 상속
+        let segment = UISegmentedControl()
+        segment.selectedSegmentIndex = 0 //default
+        segment.translatesAutoresizingMaskIntoConstraints = false
         
-        
-        return button
+        return segment
     }()
     
     override init(frame: CGRect) {
@@ -34,6 +42,7 @@ class MenuScrollCollectionViewCell: UICollectionViewCell {
         
         addSubViews()
         configure()
+        segment.insertSegment(withTitle: "\(model?.titles ?? "")", at: 0, animated: true)
     }
     
     override var isSelected: Bool {
@@ -48,40 +57,35 @@ class MenuScrollCollectionViewCell: UICollectionViewCell {
     
     private func addSubViews() {
         addSubview(contentsView)
-        contentsView.addSubview(button)
+        contentsView.addSubview(segment)
+        //contentsView.addSubview(button)
     }
     
     private func configure() {
         backgroundColor = .white
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
-        button.setUnderline()
+//        button.setTitleColor(.black, for: .normal)
+//        button.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
+        
         //TODO: 버튼 탭 활성화하기(ScrollView & Button)
-        button.titleLabel?.adjustsFontForContentSizeCategory = true
+//        button.titleLabel?.adjustsFontForContentSizeCategory = true
         
         contentsView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(5)
             $0.leading.trailing.equalToSuperview()
         }
         
-        button.snp.makeConstraints {
+//        button.snp.makeConstraints {
+//            $0.center.equalToSuperview()
+//        }
+        
+        segment.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
     }
     
     private func bind() {
-        button.setTitle("\(model?.titles ?? "")", for: .normal)
-    }
-}
-
-extension UIButton {
-    func setUnderline() {
-        guard let title = title(for: .normal) else { return }
-        let attributedString = NSMutableAttributedString(string: title)
-        attributedString.addAttribute(.underlineStyle,
-                                      value: NSUnderlineStyle.single.rawValue,
-                                      range: NSRange(location: 0, length: title.count)
-        )
-        setAttributedTitle(attributedString, for: .normal)
+        //button.setTitle("\(model?.titles ?? "")", for: .normal)
+        //segment.insertSegment(withTitle: "\(model?.titles ?? "")", at: 0, animated: true)
+        segment.setTitle("\(model?.titles ?? "")", forSegmentAt: 0)
     }
 }

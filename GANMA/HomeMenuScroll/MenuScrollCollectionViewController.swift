@@ -52,7 +52,7 @@ class MenuScrollCollectionViewController: UIViewController {
     
     private func setupDataSource() {
         for i in 0..<titles.count {
-            let model = MenuScrollCollectionViewModel(titles: titles[i])
+            let model = MenuScrollCollectionViewModel(title: i, titles: titles[i])
             dataSource += [model]
         }
     }
@@ -158,7 +158,8 @@ extension MenuScrollCollectionViewController: UICollectionViewDelegate, UICollec
                 .asDriver { _ in .never() }
                 .drive(onNext: { [weak self] _ in
                     self?.didTapCell(at: indexPath)
-                }).disposed(by: cell.disposeBag)
+                })
+                .disposed(by: cell.disposeBag)
         }
         return cell
     }

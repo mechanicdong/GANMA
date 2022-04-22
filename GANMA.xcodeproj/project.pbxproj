@@ -112,7 +112,6 @@
 				DD176E7B280E5CB6006FCD51 /* HomeViewController.swift */,
 				DD176E7F280E5E82006FCD51 /* HomeViewModel.swift */,
 				DD6032D228100AF100514A44 /* HomeMenuScroll */,
-				DD6032DE2810EBFD00514A44 /* HomePaging */,
 				DD6032DB2810E0DE00514A44 /* later */,
 				DD176E5E280E583D006FCD51 /* Assets.xcassets */,
 				DD176E60280E583D006FCD51 /* LaunchScreen.storyboard */,
@@ -144,13 +143,6 @@
 				DD176E8D280E6170006FCD51 /* DrawerViewModel.swift */,
 			);
 			path = later;
-			sourceTree = "<group>";
-		};
-		DD6032DE2810EBFD00514A44 /* HomePaging */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = HomePaging;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
