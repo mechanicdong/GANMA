@@ -160,6 +160,15 @@ extension MenuScrollCollectionViewController: UICollectionViewDelegate, UICollec
                     self?.didTapCell(at: indexPath)
                 })
                 .disposed(by: cell.disposeBag)
+            
+            cell.segment.rx.tapGesture(configuration: .none)
+                .when(.recognized)
+                .asDriver { _ in .never() }
+                .drive(onNext: { [weak self] _ in
+                    self?.didTapCell(at: indexPath)
+                })
+                .disposed(by: cell.disposeBag)
+                        
         }
         return cell
     }

@@ -4,6 +4,7 @@
 //
 //  Created by 이동희 on 2022/04/21.
 //
+//TODO: 4/23 UISegmentControl 탭 이벤트 및 언더바 구현하기
 
 import Foundation
 import UIKit
@@ -17,16 +18,20 @@ class MenuScrollCollectionViewCell: UICollectionViewCell {
     
     lazy var contentsView: UIView = {
         let view = UIView()
-        view.backgroundColor = .gray.withAlphaComponent(0.5) //default
+        //view.backgroundColor = .gray.withAlphaComponent(0.5) //default
+        view.backgroundColor = .white.withAlphaComponent(0.5) //default
         
         return view
     }()
     
-//    var button: UIButton = {
-//        let button = UIButton()
-//
-//        return button
-//    }()
+    lazy var buttonBar: UIView = {
+        let buttonBar = UIView()
+        
+        buttonBar.translatesAutoresizingMaskIntoConstraints = false
+        buttonBar.backgroundColor = .orange
+        
+        return buttonBar
+    }()
     
     //TODO: Segment Control without Button
     var segment: UISegmentedControl = { //UIControl < UIView 상속
@@ -42,12 +47,28 @@ class MenuScrollCollectionViewCell: UICollectionViewCell {
         
         addSubViews()
         configure()
+        isSegmentSelected()
         segment.insertSegment(withTitle: "\(model?.titles ?? "")", at: 0, animated: true)
+    }
+    
+    private func isSegmentSelected() {
+        segment.setTitleTextAttributes(
+            [NSAttributedString.Key.font: UIFont(name: "DINCondensed-Bold", size: 15.0) ?? UIFont(),
+             NSAttributedString.Key.foregroundColor: UIColor.black
+            ],
+            for: .normal
+        )
+        segment.setTitleTextAttributes(
+            [NSAttributedString.Key.font: UIFont(name: "DINCondensed-Bold", size: 15.0) ?? UIFont(),
+             NSAttributedString.Key.foregroundColor: UIColor.orange
+            ],
+            for: .selected
+        )
     }
     
     override var isSelected: Bool {
         didSet {
-            contentsView.backgroundColor = isSelected ? .white : .gray.withAlphaComponent(0.5)
+            contentsView.backgroundColor = isSelected ? .white.withAlphaComponent(0.5) : .white
         }
     }
     
@@ -58,34 +79,30 @@ class MenuScrollCollectionViewCell: UICollectionViewCell {
     private func addSubViews() {
         addSubview(contentsView)
         contentsView.addSubview(segment)
-        //contentsView.addSubview(button)
+        contentsView.addSubview(buttonBar)
     }
     
     private func configure() {
         backgroundColor = .white
-//        button.setTitleColor(.black, for: .normal)
-//        button.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
-        
-        //TODO: 버튼 탭 활성화하기(ScrollView & Button)
-//        button.titleLabel?.adjustsFontForContentSizeCategory = true
         
         contentsView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(5)
             $0.leading.trailing.equalToSuperview()
         }
         
-//        button.snp.makeConstraints {
-//            $0.center.equalToSuperview()
-//        }
-        
         segment.snp.makeConstraints {
             $0.center.equalToSuperview()
+        }
+        
+        buttonBar.snp.makeConstraints {
+            $0.top.equalTo(segment.snp.bottom)
+            $0.height.equalTo(4)
+            $0.leading.equalTo(segment.snp.leading)
+            $0.width.equalTo(segment.snp.width)
         }
     }
     
     private func bind() {
-        //button.setTitle("\(model?.titles ?? "")", for: .normal)
-        //segment.insertSegment(withTitle: "\(model?.titles ?? "")", at: 0, animated: true)
         segment.setTitle("\(model?.titles ?? "")", forSegmentAt: 0)
     }
 }
