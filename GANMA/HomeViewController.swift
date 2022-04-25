@@ -16,6 +16,7 @@ final class HomeViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         setNavigationController()
+        setLayout()
         
         self.addChild(menu)
         self.view.addSubview(menu.view)
@@ -29,8 +30,32 @@ final class HomeViewController: UIViewController {
         containerView.addSubview(leftItem)
         containerView.addSubview(rightItem)
         containerView.addSubview(topTitle)
-
+        
         self.navigationItem.titleView = containerView
+    }
+    
+    //TODO: 네비게이션 버튼 AutoLayout 적용할 것
+    func setLayout() {
+        leftItem.translatesAutoresizingMaskIntoConstraints = false
+        leftItem.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(-180)
+            $0.trailing.equalToSuperview().inset(180)
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview()
+        }
+        rightItem.translatesAutoresizingMaskIntoConstraints = false
+        rightItem.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(180)
+            $0.trailing.equalToSuperview().inset(-180)
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview()
+        }
+        
+        topTitle.translatesAutoresizingMaskIntoConstraints = false
+        topTitle.snp.makeConstraints {
+            $0.leading.right.equalToSuperview()
+            $0.centerX.centerY.equalToSuperview()
+        }
     }
     
     lazy var menu: UIViewController = {
@@ -57,18 +82,20 @@ final class HomeViewController: UIViewController {
     }()
     
     lazy var leftItem: UIButton = {
-        let leftItem = UIButton(frame: CGRect(x: -180, y: 0, width: 200, height: 18))
+        let leftItem = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 18))
         leftItem.setImage(UIImage(systemName: "mail"), for: .normal)
         
         return leftItem
     }()
     
     lazy var rightItem: UIButton = {
-        let rightItem = UIButton(frame: CGRect(x: 180, y: 0, width: 200, height: 18))
+        let rightItem = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 18))
         rightItem.setImage(UIImage(systemName: "rectangle.badge.person.crop"), for: .normal)
         
         return rightItem
     }()
+    
+    
     
 
 
