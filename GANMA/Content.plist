@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Item 0</key>
+	<dict>
+		<key>sectionType</key>
+		<string>main</string>
+		<key>contentItem</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string></string>
+				<key>description</key>
+				<string></string>
+				<key>imageName</key>
+				<string></string>
+				<key>publishedCount</key>
+				<array/>
+				<key>1</key>
+				<string></string>
+				<key>2</key>
+				<string></string>
+				<key>3</key>
+				<string></string>
+				<key>4</key>
+				<string></string>
+				<key>5</key>
+				<string></string>
+				<key>summary</key>
+				<array/>
+				<key>하늘에서 갑자기 치킨이 쏟아진다면</key>
+				<string></string>
+				<key>치킨을 먹었더니 닭이 된다면</key>
+				<string></string>
+				<key>닭으로 퇴화한 나</key>
+				<string></string>
+				<key>마을을 구하러 가나?</key>
+				<string></string>
+				<key>닭털을 모아 강해질 수가 있다고?</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>
