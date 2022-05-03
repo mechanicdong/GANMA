@@ -13,7 +13,6 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .white
         
         attribute()
@@ -28,7 +27,6 @@ class LoginViewController: UIViewController {
     
     private lazy var emailLogInButton: UIButton = {
         let emailLogInButton = UIButton.init(frame: .init())
-        
         
         return emailLogInButton
     }()
@@ -79,7 +77,6 @@ class LoginViewController: UIViewController {
     @objc func emailLogInButtonTapped() {
         let viewController = EnterEmailViewController()
         self.navigationController?.pushViewController(viewController, animated: true)
-        
     }
     
     @objc func googleLogInButtonTapped() {

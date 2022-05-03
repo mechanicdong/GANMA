@@ -1,46 +1,222 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>Item 0</key>
+<array>
+	<dict>
+		<key>sectionType</key>
+		<string>basic</string>
+		<key>contentItem</key>
+		<array>
+			<dict>
+				<key>didSelected</key>
+				<false/>
+				<key>title</key>
+				<string>자고 일어 났더니 닭이된 건</string>
+				<key>description</key>
+				<string>평범한 고등학생, 자고 일어났더니 닭으로 변신?</string>
+				<key>imageName</key>
+				<string>poster8</string>
+				<key>publishedCount</key>
+				<array>
+					<string>1</string>
+				</array>
+				<key>summary</key>
+				<array>
+					<string>하늘에서 갑자기 치킨이 쏟아진다면</string>
+				</array>
+			</dict>
+			<dict>
+				<key>didSelected</key>
+				<false/>
+				<key>title</key>
+				<string>자고 일어 났더니 닭이된 건</string>
+				<key>description</key>
+				<string>평범한 고등학생, 자고 일어났더니 닭으로 변신?</string>
+				<key>imageName</key>
+				<string>poster9</string>
+				<key>publishedCount</key>
+				<array>
+					<string>1</string>
+				</array>
+				<key>summary</key>
+				<array>
+					<string>하늘에서 갑자기 치킨이 쏟아진다면</string>
+				</array>
+			</dict>
+			<dict>
+				<key>didSelected</key>
+				<false/>
+				<key>title</key>
+				<string>자고 일어 났더니 닭이된 건</string>
+				<key>description</key>
+				<string>평범한 고등학생, 자고 일어났더니 닭으로 변신?</string>
+				<key>imageName</key>
+				<string>poster10</string>
+				<key>publishedCount</key>
+				<array>
+					<string>1</string>
+				</array>
+				<key>summary</key>
+				<array>
+					<string>하늘에서 갑자기 치킨이 쏟아진다면</string>
+				</array>
+			</dict>
+			<dict>
+				<key>didSelected</key>
+				<false/>
+				<key>title</key>
+				<string>자고 일어 났더니 닭이된 건</string>
+				<key>description</key>
+				<string>평범한 고등학생, 자고 일어났더니 닭으로 변신?</string>
+				<key>imageName</key>
+				<string>poster11</string>
+				<key>publishedCount</key>
+				<array>
+					<string>1</string>
+				</array>
+				<key>summary</key>
+				<array>
+					<string>하늘에서 갑자기 치킨이 쏟아진다면</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
 	<dict>
 		<key>sectionType</key>
 		<string>main</string>
 		<key>contentItem</key>
 		<array>
 			<dict>
+				<key>didSelected</key>
+				<false/>
 				<key>title</key>
 				<string></string>
 				<key>description</key>
 				<string></string>
 				<key>imageName</key>
-				<string></string>
+				<string>poster0</string>
 				<key>publishedCount</key>
-				<array/>
-				<key>1</key>
-				<string></string>
-				<key>2</key>
-				<string></string>
-				<key>3</key>
-				<string></string>
-				<key>4</key>
-				<string></string>
-				<key>5</key>
-				<string></string>
+				<array>
+					<string>1</string>
+					<string>2</string>
+					<string>3</string>
+					<string>4</string>
+					<string>5</string>
+				</array>
 				<key>summary</key>
-				<array/>
-				<key>하늘에서 갑자기 치킨이 쏟아진다면</key>
+				<array>
+					<string>하늘에서 갑자기 치킨이 쏟아진다면</string>
+					<string>치킨을 먹었더니 닭이 된다면</string>
+					<string>닭으로 퇴화한 나</string>
+					<string>마을을 구하러 가나?</string>
+					<string>닭털을 모아 강해질 수가 있다고?</string>
+				</array>
+			</dict>
+			<dict>
+				<key>didSelected</key>
+				<false/>
+				<key>title</key>
 				<string></string>
-				<key>치킨을 먹었더니 닭이 된다면</key>
+				<key>description</key>
 				<string></string>
-				<key>닭으로 퇴화한 나</key>
+				<key>imageName</key>
+				<string>poster1</string>
+				<key>publishedCount</key>
+				<array>
+					<string>1</string>
+					<string>2</string>
+					<string>3</string>
+					<string>4</string>
+					<string>5</string>
+				</array>
+				<key>summary</key>
+				<array>
+					<string>하늘에서 갑자기 치킨이 쏟아진다면</string>
+					<string>치킨을 먹었더니 닭이 된다면</string>
+					<string>닭으로 퇴화한 나</string>
+					<string>마을을 구하러 가나?</string>
+					<string>닭털을 모아 강해질 수가 있다고?</string>
+				</array>
+			</dict>
+			<dict>
+				<key>didSelected</key>
+				<false/>
+				<key>title</key>
 				<string></string>
-				<key>마을을 구하러 가나?</key>
+				<key>description</key>
 				<string></string>
-				<key>닭털을 모아 강해질 수가 있다고?</key>
+				<key>imageName</key>
+				<string>poster2</string>
+				<key>publishedCount</key>
+				<array>
+					<string>1</string>
+					<string>2</string>
+					<string>3</string>
+					<string>4</string>
+					<string>5</string>
+				</array>
+				<key>summary</key>
+				<array>
+					<string>하늘에서 갑자기 치킨이 쏟아진다면</string>
+					<string>치킨을 먹었더니 닭이 된다면</string>
+					<string>닭으로 퇴화한 나</string>
+					<string>마을을 구하러 가나?</string>
+					<string>닭털을 모아 강해질 수가 있다고?</string>
+				</array>
+			</dict>
+			<dict>
+				<key>didSelected</key>
+				<false/>
+				<key>title</key>
 				<string></string>
+				<key>description</key>
+				<string></string>
+				<key>imageName</key>
+				<string>poster3</string>
+				<key>publishedCount</key>
+				<array>
+					<string>1</string>
+					<string>2</string>
+					<string>3</string>
+					<string>4</string>
+					<string>5</string>
+				</array>
+				<key>summary</key>
+				<array>
+					<string>하늘에서 갑자기 치킨이 쏟아진다면</string>
+					<string>치킨을 먹었더니 닭이 된다면</string>
+					<string>닭으로 퇴화한 나</string>
+					<string>마을을 구하러 가나?</string>
+					<string>닭털을 모아 강해질 수가 있다고?</string>
+				</array>
+			</dict>
+			<dict>
+				<key>didSelected</key>
+				<false/>
+				<key>title</key>
+				<string></string>
+				<key>description</key>
+				<string></string>
+				<key>imageName</key>
+				<string>poster4</string>
+				<key>publishedCount</key>
+				<array>
+					<string>1</string>
+					<string>2</string>
+					<string>3</string>
+					<string>4</string>
+					<string>5</string>
+				</array>
+				<key>summary</key>
+				<array>
+					<string>하늘에서 갑자기 치킨이 쏟아진다면</string>
+					<string>치킨을 먹었더니 닭이 된다면</string>
+					<string>닭으로 퇴화한 나</string>
+					<string>마을을 구하러 가나?</string>
+					<string>닭털을 모아 강해질 수가 있다고?</string>
+				</array>
 			</dict>
 		</array>
 	</dict>
-</dict>
+</array>
 </plist>

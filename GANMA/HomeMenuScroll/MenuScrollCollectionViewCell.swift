@@ -24,20 +24,24 @@ class MenuScrollCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    lazy var buttonBar: UIView = {
-        let buttonBar = UIView()
-        
-        buttonBar.translatesAutoresizingMaskIntoConstraints = false
-        buttonBar.backgroundColor = .orange
-        
-        return buttonBar
-    }()
-    
     //TODO: Segment Control without Button
     var segment: UISegmentedControl = { //UIControl < UIView 상속
         let segment = UISegmentedControl()
         segment.selectedSegmentIndex = 0 //default
         segment.translatesAutoresizingMaskIntoConstraints = false
+        
+        segment.setTitleTextAttributes(
+            [NSAttributedString.Key.font: UIFont(name: "DINCondensed-Bold", size: 15.0) ?? UIFont(),
+             NSAttributedString.Key.foregroundColor: UIColor.black
+            ],
+            for: .normal
+        )
+        segment.setTitleTextAttributes(
+            [NSAttributedString.Key.font: UIFont(name: "DINCondensed-Bold", size: 20.0) ?? UIFont(),
+             NSAttributedString.Key.foregroundColor: UIColor.red
+            ],
+            for: .selected
+        )
         
         return segment
     }()
@@ -47,23 +51,7 @@ class MenuScrollCollectionViewCell: UICollectionViewCell {
         
         addSubViews()
         configure()
-        isSegmentSelected()
         segment.insertSegment(withTitle: "\(model?.titles ?? "")", at: 0, animated: true)
-    }
-    
-    private func isSegmentSelected() {
-        segment.setTitleTextAttributes(
-            [NSAttributedString.Key.font: UIFont(name: "DINCondensed-Bold", size: 15.0) ?? UIFont(),
-             NSAttributedString.Key.foregroundColor: UIColor.black
-            ],
-            for: .normal
-        )
-        segment.setTitleTextAttributes(
-            [NSAttributedString.Key.font: UIFont(name: "DINCondensed-Bold", size: 15.0) ?? UIFont(),
-             NSAttributedString.Key.foregroundColor: UIColor.orange
-            ],
-            for: .selected
-        )
     }
     
     override var isSelected: Bool {
@@ -79,7 +67,6 @@ class MenuScrollCollectionViewCell: UICollectionViewCell {
     private func addSubViews() {
         addSubview(contentsView)
         contentsView.addSubview(segment)
-        contentsView.addSubview(buttonBar)
     }
     
     private func configure() {
@@ -93,16 +80,10 @@ class MenuScrollCollectionViewCell: UICollectionViewCell {
         segment.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
-        
-        buttonBar.snp.makeConstraints {
-            $0.top.equalTo(segment.snp.bottom)
-            $0.height.equalTo(4)
-            $0.leading.equalTo(segment.snp.leading)
-            $0.width.equalTo(segment.snp.width)
-        }
     }
     
     private func bind() {
         segment.setTitle("\(model?.titles ?? "")", forSegmentAt: 0)
     }
 }
+

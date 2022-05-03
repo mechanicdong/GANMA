@@ -58,24 +58,25 @@ class MenuScrollCollectionViewController: UIViewController {
     }
     
     private func setupViewControllers() {
-        var i = 0
+//        var i = 0
         dataSource.forEach { _ in
-            let vc = UIViewController()
-            let red = CGFloat(arc4random_uniform(256)) / 255
-            let green = CGFloat(arc4random_uniform(256)) / 255
-            let blue = CGFloat(arc4random_uniform(256)) / 255
+            //let vc = UIViewController()
+            let vc = TopPagingViewController()
+//            let red = CGFloat(arc4random_uniform(256)) / 255
+//            let green = CGFloat(arc4random_uniform(256)) / 255
+//            let blue = CGFloat(arc4random_uniform(256)) / 255
             
-            vc.view.backgroundColor = UIColor(red: red, green: green, blue: blue, alpha: 1)
-            
-            let label = UILabel()
-            label.text = "\(i)"
-            label.font = .systemFont(ofSize: 15, weight: .bold)
-            i += 1
-
-            vc.view.addSubview(label)
-            label.snp.makeConstraints {
-                $0.center.equalToSuperview()
-            }
+//            vc.view.backgroundColor = UIColor(red: red, green: green, blue: blue, alpha: 1)
+//
+//            let label = UILabel()
+//            label.text = "\(i)"
+//            label.font = .systemFont(ofSize: 15, weight: .bold)
+//            i += 1
+//
+//            vc.view.addSubview(label)
+//            label.snp.makeConstraints {
+//                $0.center.equalToSuperview()
+//            }
             dataSourceVC += [vc]
         }
     }
@@ -96,7 +97,7 @@ class MenuScrollCollectionViewController: UIViewController {
         
         return vc
     }()
-    
+
     private func addSubViews() {
         view.addSubview(collectionView)
         addChild(pageViewController)

@@ -26,9 +26,19 @@
 		DD36FB4528110A2100D893BF /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = DD36FB4428110A2100D893BF /* SnapKit */; };
 		DD47CCAB281D7CCC008DFC7B /* TopPagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47CCAA281D7CCC008DFC7B /* TopPagingViewController.swift */; };
 		DD47CCAD281D7CDD008DFC7B /* TopPagingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47CCAC281D7CDD008DFC7B /* TopPagingViewModel.swift */; };
+		DD47CCB0281E4455008DFC7B /* Content.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD47CCAF281E4455008DFC7B /* Content.plist */; };
+		DD47CCB2281E46D9008DFC7B /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47CCB1281E46D9008DFC7B /* Content.swift */; };
+		DD47CCB4281E5141008DFC7B /* ContentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47CCB3281E5141008DFC7B /* ContentCollectionViewCell.swift */; };
+		DD47CCB6281E9C02008DFC7B /* ContentCollectionViewBasicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47CCB5281E9C02008DFC7B /* ContentCollectionViewBasicCell.swift */; };
+		DD47CCB8281F9C4B008DFC7B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47CCB7281F9C4B008DFC7B /* LoginViewController.swift */; };
+		DD47CCBB281FE15D008DFC7B /* EnterEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47CCBA281FE15D008DFC7B /* EnterEmailViewController.swift */; };
+		DD47CCBF28201287008DFC7B /* EmailSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47CCBE28201287008DFC7B /* EmailSignUpViewController.swift */; };
+		DD47CCC12820222A008DFC7B /* EmailSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47CCC02820222A008DFC7B /* EmailSignInViewController.swift */; };
 		DD6032D62810D72500514A44 /* MenuScrollCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6032D52810D72500514A44 /* MenuScrollCollectionViewModel.swift */; };
 		DD6032D82810D74B00514A44 /* MenuScrollCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6032D72810D74B00514A44 /* MenuScrollCollectionViewCell.swift */; };
 		DD6032DA2810DB4300514A44 /* MenuScrollCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6032D92810DB4300514A44 /* MenuScrollCollectionViewController.swift */; };
+		DDE42F8D28210E01003BEC0D /* EmailSignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE42F8C28210E01003BEC0D /* EmailSignUpViewModel.swift */; };
+		DDE42F9128214FA1003BEC0D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDE42F9028214FA1003BEC0D /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,9 +64,20 @@
 		DD176E8D280E6170006FCD51 /* DrawerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerViewModel.swift; sourceTree = "<group>"; };
 		DD47CCAA281D7CCC008DFC7B /* TopPagingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPagingViewController.swift; sourceTree = "<group>"; };
 		DD47CCAC281D7CDD008DFC7B /* TopPagingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPagingViewModel.swift; sourceTree = "<group>"; };
+		DD47CCAF281E4455008DFC7B /* Content.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Content.plist; sourceTree = "<group>"; };
+		DD47CCB1281E46D9008DFC7B /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
+		DD47CCB3281E5141008DFC7B /* ContentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCollectionViewCell.swift; sourceTree = "<group>"; };
+		DD47CCB5281E9C02008DFC7B /* ContentCollectionViewBasicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCollectionViewBasicCell.swift; sourceTree = "<group>"; };
+		DD47CCB7281F9C4B008DFC7B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		DD47CCB9281FA068008DFC7B /* GANMA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GANMA.entitlements; sourceTree = "<group>"; };
+		DD47CCBA281FE15D008DFC7B /* EnterEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterEmailViewController.swift; sourceTree = "<group>"; };
+		DD47CCBE28201287008DFC7B /* EmailSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignUpViewController.swift; sourceTree = "<group>"; };
+		DD47CCC02820222A008DFC7B /* EmailSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignInViewController.swift; sourceTree = "<group>"; };
 		DD6032D52810D72500514A44 /* MenuScrollCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScrollCollectionViewModel.swift; sourceTree = "<group>"; };
 		DD6032D72810D74B00514A44 /* MenuScrollCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScrollCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD6032D92810DB4300514A44 /* MenuScrollCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScrollCollectionViewController.swift; sourceTree = "<group>"; };
+		DDE42F8C28210E01003BEC0D /* EmailSignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignUpViewModel.swift; sourceTree = "<group>"; };
+		DDE42F9028214FA1003BEC0D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,16 +131,25 @@
 		DD176E54280E583C006FCD51 /* GANMA */ = {
 			isa = PBXGroup;
 			children = (
+				DD47CCB9281FA068008DFC7B /* GANMA.entitlements */,
 				DD176E55280E583C006FCD51 /* AppDelegate.swift */,
 				DD176E57280E583C006FCD51 /* SceneDelegate.swift */,
 				DD176E79280E5A56006FCD51 /* TabBarController.swift */,
 				DD176E7B280E5CB6006FCD51 /* HomeViewController.swift */,
 				DD176E7F280E5E82006FCD51 /* HomeViewModel.swift */,
+				DD47CCB1281E46D9008DFC7B /* Content.swift */,
+				DD47CCB7281F9C4B008DFC7B /* LoginViewController.swift */,
+				DD47CCBA281FE15D008DFC7B /* EnterEmailViewController.swift */,
+				DD47CCBE28201287008DFC7B /* EmailSignUpViewController.swift */,
+				DDE42F8C28210E01003BEC0D /* EmailSignUpViewModel.swift */,
+				DD47CCC02820222A008DFC7B /* EmailSignInViewController.swift */,
 				DD6032D228100AF100514A44 /* HomeMenuScroll */,
 				DD6032DB2810E0DE00514A44 /* later */,
 				DD176E5E280E583D006FCD51 /* Assets.xcassets */,
 				DD176E60280E583D006FCD51 /* LaunchScreen.storyboard */,
 				DD176E63280E583D006FCD51 /* Info.plist */,
+				DDE42F9028214FA1003BEC0D /* GoogleService-Info.plist */,
+				DD47CCAF281E4455008DFC7B /* Content.plist */,
 			);
 			path = GANMA;
 			sourceTree = "<group>";
@@ -129,6 +159,8 @@
 			children = (
 				DD47CCAA281D7CCC008DFC7B /* TopPagingViewController.swift */,
 				DD47CCAC281D7CDD008DFC7B /* TopPagingViewModel.swift */,
+				DD47CCB3281E5141008DFC7B /* ContentCollectionViewCell.swift */,
+				DD47CCB5281E9C02008DFC7B /* ContentCollectionViewBasicCell.swift */,
 			);
 			path = TopPagingViewController;
 			sourceTree = "<group>";
@@ -227,7 +259,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD176E62280E583D006FCD51 /* LaunchScreen.storyboard in Resources */,
+				DDE42F9128214FA1003BEC0D /* GoogleService-Info.plist in Resources */,
 				DD176E5F280E583D006FCD51 /* Assets.xcassets in Resources */,
+				DD47CCB0281E4455008DFC7B /* Content.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,16 +318,24 @@
 				DD176E7E280E5E74006FCD51 /* PublishViewController.swift in Sources */,
 				DD6032DA2810DB4300514A44 /* MenuScrollCollectionViewController.swift in Sources */,
 				DD176E80280E5E82006FCD51 /* HomeViewModel.swift in Sources */,
+				DD47CCB4281E5141008DFC7B /* ContentCollectionViewCell.swift in Sources */,
 				DD176E7A280E5A56006FCD51 /* TabBarController.swift in Sources */,
 				DD176E82280E5E8D006FCD51 /* PublishViewModel.swift in Sources */,
 				DD47CCAD281D7CDD008DFC7B /* TopPagingViewModel.swift in Sources */,
 				DD176E8C280E6168006FCD51 /* DrawerViewController.swift in Sources */,
+				DD47CCBF28201287008DFC7B /* EmailSignUpViewController.swift in Sources */,
 				DD176E56280E583C006FCD51 /* AppDelegate.swift in Sources */,
+				DD47CCB8281F9C4B008DFC7B /* LoginViewController.swift in Sources */,
+				DD47CCC12820222A008DFC7B /* EmailSignInViewController.swift in Sources */,
+				DD47CCB6281E9C02008DFC7B /* ContentCollectionViewBasicCell.swift in Sources */,
 				DD47CCAB281D7CCC008DFC7B /* TopPagingViewController.swift in Sources */,
 				DD176E8E280E6170006FCD51 /* DrawerViewModel.swift in Sources */,
 				DD6032D62810D72500514A44 /* MenuScrollCollectionViewModel.swift in Sources */,
 				DD176E88280E6156006FCD51 /* RankingViewController.swift in Sources */,
 				DD176E84280E6103006FCD51 /* FinishViewController.swift in Sources */,
+				DDE42F8D28210E01003BEC0D /* EmailSignUpViewModel.swift in Sources */,
+				DD47CCB2281E46D9008DFC7B /* Content.swift in Sources */,
+				DD47CCBB281FE15D008DFC7B /* EnterEmailViewController.swift in Sources */,
 				DD176E58280E583C006FCD51 /* SceneDelegate.swift in Sources */,
 				DD176E7C280E5CB6006FCD51 /* HomeViewController.swift in Sources */,
 				DD176E86280E6119006FCD51 /* FinishViewModel.swift in Sources */,
@@ -435,6 +477,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GANMA/GANMA.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6P7X76PR5Q;
@@ -464,6 +507,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GANMA/GANMA.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6P7X76PR5Q;

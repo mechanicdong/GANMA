@@ -9,6 +9,7 @@ import UIKit
 
 struct Content: Decodable {
     let sectionType: SectionType
+    var contentItem: [Item]
     
     enum SectionType: String, Decodable {
         case main //only img
@@ -34,6 +35,7 @@ struct Item: Decodable {
     let imageName: String
     let summary: [String]
     let publishedCount: [String]
+    var didSelected: Bool
     
     var image: UIImage {
         return UIImage(named: imageName) ?? UIImage()

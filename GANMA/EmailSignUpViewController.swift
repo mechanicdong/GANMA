@@ -94,17 +94,21 @@ class EmailSignUpViewController: UIViewController {
         
         //정합성 체크하여 버튼 활성화
         viewModel.isValid()
+            .observe(on: MainScheduler.instance)
             .bind(to: nextButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
         viewModel.isValid()
+            .observe(on: MainScheduler.instance)
             .bind(to: errorLabel.rx.isHidden)
             .disposed(by: disposeBag)
         
         viewModel.isValid()
+            .observe(on: MainScheduler.instance)
             .map { $0 ? 1 : 0.3 }
             .bind(to: nextButton.rx.alpha)
             .disposed(by: disposeBag)
+
     }
     
     private func attribute() {
