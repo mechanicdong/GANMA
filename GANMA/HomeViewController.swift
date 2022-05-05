@@ -16,7 +16,7 @@ final class HomeViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         setNavigationController()
-        setLayout()
+        //setLayout()
         
         self.addChild(menu)
         self.view.addSubview(menu.view)
@@ -26,36 +26,16 @@ final class HomeViewController: UIViewController {
     func setNavigationController() {
         
         navigationItem.largeTitleDisplayMode = .never
-        
-        containerView.addSubview(leftItem)
-        containerView.addSubview(rightItem)
-        containerView.addSubview(topTitle)
-        
-        self.navigationItem.titleView = containerView
+        self.navigationItem.rightBarButtonItem = rightItem
+        self.navigationItem.leftBarButtonItem = leftItem
+        self.navigationItem.title = topTitle.text
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.orange]
     }
     
-    //TODO: 네비게이션 버튼 AutoLayout 적용할 것
-    func setLayout() {
-        leftItem.translatesAutoresizingMaskIntoConstraints = false
-        leftItem.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(-180)
-            $0.trailing.equalToSuperview().inset(180)
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview()
-        }
-        rightItem.translatesAutoresizingMaskIntoConstraints = false
-        rightItem.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(180)
-            $0.trailing.equalToSuperview().inset(-180)
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview()
-        }
-        
-        topTitle.translatesAutoresizingMaskIntoConstraints = false
-        topTitle.snp.makeConstraints {
-            $0.leading.right.equalToSuperview()
-            $0.centerX.centerY.equalToSuperview()
-        }
+    @objc func moveToMyPage() {
+        let rootVC = MyPageViewController()
+        self.navigationController?.pushViewController(rootVC, animated: true)
+        print("Tapped")
     }
     
     lazy var menu: UIViewController = {
@@ -64,39 +44,31 @@ final class HomeViewController: UIViewController {
         return menu
     }()
     
-    lazy var containerView: UIView = {
-        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 36))
-        
-        return containerView
-    }()
+//    lazy var containerView: UIView = {
+//        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 36))
+//
+//        return containerView
+//    }()
     
     lazy var topTitle: UILabel = {
         let topTitle = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 18))
         topTitle.numberOfLines = 1
         topTitle.textAlignment = .center
-        topTitle.font = .systemFont(ofSize: 25, weight: .bold)
         topTitle.textColor = .systemYellow
         topTitle.text = "hoho!"
         
         return topTitle
     }()
-    
-    lazy var leftItem: UIButton = {
-        let leftItem = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 18))
-        leftItem.setImage(UIImage(systemName: "mail"), for: .normal)
+
+    lazy var leftItem: UIBarButtonItem = {
+        let leftItem = UIBarButtonItem(title: "왼쪽", style: .plain, target: self, action: nil)
         
         return leftItem
     }()
-    
-    lazy var rightItem: UIButton = {
-        let rightItem = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 18))
-        rightItem.setImage(UIImage(systemName: "rectangle.badge.person.crop"), for: .normal)
+  
+    lazy var rightItem: UIBarButtonItem = {
+        let rightItem = UIBarButtonItem(title: "오른쪽", style: .plain, target: self, action: #selector(moveToMyPage))
         
         return rightItem
     }()
-    
-    
-    
-
-
 }
