@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import RxSwift
 
+
 class EmailSignUpViewController: UIViewController {
     let disposeBag = DisposeBag()
     let viewModel = EmailSignUpViewModel()
@@ -108,7 +109,17 @@ class EmailSignUpViewController: UIViewController {
             .map { $0 ? 1 : 0.3 }
             .bind(to: nextButton.rx.alpha)
             .disposed(by: disposeBag)
-
+        
+        //Firebase email/pw authorization
+        //TODO: 나중에 마이페이지로 이동하게끔 구현
+        nextButton.rx.tap
+            .subscribe(
+                onNext: { [weak self] _ in
+                    viewModel.createUser()
+                    
+                })
+            .disposed(by: disposeBag)
+        
     }
     
     private func attribute() {

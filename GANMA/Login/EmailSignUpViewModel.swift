@@ -8,13 +8,14 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import Firebase
 
 struct EmailSignUpViewModel {
     let disposeBag = DisposeBag()
     
     //View -> ViewModel
-    let EmailTextInputted = PublishRelay<String>()
-    let pwTextInputted = PublishRelay<String>()
+    let EmailTextInputted = BehaviorRelay<String>(value: "")
+    let pwTextInputted = BehaviorRelay<String>(value: "")
     
     init() {
         
@@ -26,6 +27,18 @@ struct EmailSignUpViewModel {
             .map { username, password in
                 return username.count > 0 && username.contains("@") && username.contains(".") && password.count > 7
             }
+    }
+    
+    //Firebase email/pw authorization
+    func createUser() {
+        let email = EmailTextInputted
+            .value
+        print("\(email)")
+        let password = pwTextInputted
+            .value
+        print("\(password)")
+        
+        Auth.auth().createUser(withEmail: email, password: password)
     }
     
 }
