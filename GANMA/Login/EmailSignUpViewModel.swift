@@ -17,6 +17,17 @@ struct EmailSignUpViewModel {
     let EmailTextInputted = BehaviorRelay<String>(value: "")
     let pwTextInputted = BehaviorRelay<String>(value: "")
     
+    //ViewModel -> View
+    let emailInfo = BehaviorRelay<String>(value: "")
+    let pwInfo = BehaviorSubject<String>(value: "")
+//    var loginInfo: Observable<LoginInfo> {
+//        return Observable
+//            .combineLatest(EmailTextInputted, pwTextInputted) { id, pw in
+//                return LoginInfo(id: id, pw: pw)
+//            }
+//    }
+
+    
     init() {
         
     }
@@ -31,14 +42,24 @@ struct EmailSignUpViewModel {
     
     //Firebase email/pw authorization
     func createUser() {
-        let email = EmailTextInputted
-            .value
+        let email = EmailTextInputted.value
         print("\(email)")
-        let password = pwTextInputted
-            .value
+        let password = pwTextInputted.value
         print("\(password)")
         
         Auth.auth().createUser(withEmail: email, password: password)
     }
     
+    func getUser() -> BehaviorRelay<String> {
+        let email = Auth.auth().currentUser?.email ?? ""
+        emailInfo.accept(email)
+        
+        return emailInfo
+    }
 }
+
+struct LoginInfo {
+    var id: String?
+    var pw: String?
+}
+

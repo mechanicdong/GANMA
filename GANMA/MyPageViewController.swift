@@ -7,20 +7,24 @@
 
 import Foundation
 import UIKit
+import RxSwift
 
 class MyPageViewController: UIViewController {
+    let disposeBag = DisposeBag()
+    let emailSignUpViewModel = EmailSignUpViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
         navigationItem.title = "MyPage"
+        bind(EmailSignUpViewModel())
         setAttribute()
         setLayout()
     }
     
     private lazy var myImage: UIImageView = {
         let myImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        myImage.image = UIImage(named: "logo_apple")
+        myImage.image = UIImage(named: "logo_google")
         
         return myImage
     }()
@@ -41,17 +45,51 @@ class MyPageViewController: UIViewController {
         return nickNameLabel
     }()
     
+    private lazy var lineView: UIView = {
+        let lineView = UIView()
+        lineView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        
+        return lineView
+    }()
+    
+    private lazy var signupButton: UIButton = {
+        let signupButton = UIButton()
+        signupButton.setTitle("SignUp / SignIn", for: .normal)
+        signupButton.setTitleColor(UIColor.black, for: .normal)
+        signupButton.layer.borderColor = UIColor.orange.cgColor
+        signupButton.layer.borderWidth = 1
+        signupButton.layer.cornerRadius = 10
+        
+        return signupButton
+    }()
+    
+    //TODO: 로그인 시 닉네임에 이메일주소 가져오기
+    func bind(_ viewModel: EmailSignUpViewModel) {
+        viewModel.getUser()
+            .asDriver()
+            .drive(self.nickNameLabel.rx.text)
+            .disposed(by: disposeBag)
+            
+    }
+    
     private func setAttribute() {
-        [myImage, welcomeLabel, nickNameLabel].forEach {
+        [myImage, welcomeLabel, nickNameLabel, lineView, signupButton].forEach {
             view.addSubview($0)
         }
-
+        signupButton.addTarget(self, action: #selector(moveToLoginVC), for: .touchDown)
+    }
+    
+    @objc func moveToLoginVC() {
+        //let vc = LoginViewController()
+        let vc = UINavigationController(rootViewController: LoginViewController())
+        //navigationController?.pushViewController(vc, animated: true)
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
     }
     
     private func setLayout() {
         myImage.layer.cornerRadius = myImage.frame.height/2
         myImage.layer.borderWidth = 1
-        //myImage.layer.borderColor = UIColor.clear.cgColor
         myImage.layer.borderColor = UIColor.black.cgColor
         // 뷰의 경계에 맞춰준다
         myImage.clipsToBounds = true
@@ -62,13 +100,26 @@ class MyPageViewController: UIViewController {
             $0.width.equalTo(100)
             $0.height.equalTo(100)
         }
+        
         welcomeLabel.snp.makeConstraints {
             $0.top.equalTo(myImage).offset(20)
             $0.leading.equalTo(myImage.snp.trailing).offset(20)
         }
+        
         nickNameLabel.snp.makeConstraints {
             $0.top.equalTo(welcomeLabel.snp.bottom).offset(20)
             $0.leading.equalTo(welcomeLabel)
+        }
+        
+        lineView.snp.makeConstraints {
+            $0.top.equalTo(myImage.snp.bottom).offset(30)
+            $0.height.equalTo(1)
+            $0.leading.trailing.equalToSuperview().inset(15)
+        }
+        
+        signupButton.snp.makeConstraints {
+            $0.top.equalTo(lineView.snp.bottom).offset(40)
+            $0.leading.trailing.equalToSuperview().inset(50)
         }
     }
     
