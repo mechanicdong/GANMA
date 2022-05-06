@@ -19,7 +19,8 @@ struct EmailSignUpViewModel {
     
     //ViewModel -> View
     let emailInfo = BehaviorRelay<String>(value: "")
-    let pwInfo = BehaviorSubject<String>(value: "")
+    let errorInfo = BehaviorRelay<String>(value: "형식이 올바르지 않습니다")
+    let loginValid = BehaviorSubject<Bool>(value: false)
 //    var loginInfo: Observable<LoginInfo> {
 //        return Observable
 //            .combineLatest(EmailTextInputted, pwTextInputted) { id, pw in
@@ -47,7 +48,32 @@ struct EmailSignUpViewModel {
         let password = pwTextInputted.value
         print("\(password)")
         
-        Auth.auth().createUser(withEmail: email, password: password)
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            if let error = error {
+                let code = (error as NSError).code
+                switch code {
+                case 17007: //이미 가입한 계정일 때
+                    //로그인하기
+                    //loginUser(withEmail: email, password: password)
+                    self.errorInfo.accept("이미 등록된 계정입니다.")
+                    loginValid.onNext(false)
+                default:
+                    self.errorInfo.accept(error.localizedDescription)
+                }
+            }
+        }
+        
+    }
+    
+    func loginUser(withEmail email: String, password: String) {
+        Auth.auth().signIn(withEmail: email, password: password) { _, error in
+            if let error = error {
+                errorInfo.accept(error.localizedDescription)
+                loginValid.onNext(false)
+            } else {
+                loginValid.onNext(true)
+            }
+        }
     }
     
     func getUser() -> BehaviorRelay<String> {

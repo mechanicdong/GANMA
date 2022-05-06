@@ -99,10 +99,10 @@ class EmailSignUpViewController: UIViewController {
             .bind(to: nextButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        viewModel.isValid()
-            .observe(on: MainScheduler.instance)
-            .bind(to: errorLabel.rx.isHidden)
-            .disposed(by: disposeBag)
+//        viewModel.isValid()
+//            .observe(on: MainScheduler.instance)
+//            .bind(to: errorLabel.rx.isHidden)
+//            .disposed(by: disposeBag)
         
         viewModel.isValid()
             .observe(on: MainScheduler.instance)
@@ -111,13 +111,29 @@ class EmailSignUpViewController: UIViewController {
             .disposed(by: disposeBag)
         
         //Firebase email/pw authorization
-        //TODO: 나중에 마이페이지로 이동하게끔 구현
         nextButton.rx.tap
             .subscribe(
-                onNext: { [weak self] _ in
+                onNext: {
                     viewModel.createUser()
-                    
+                    //self?.dismiss(animated: true)
                 })
+            .disposed(by: disposeBag)
+        
+        viewModel.errorInfo
+            .asObservable()
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                self.errorLabel.text = $0
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.loginValid
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                if $0 {
+                    self?.dismiss(animated: true)
+                } else { return }
+            })
             .disposed(by: disposeBag)
         
     }
