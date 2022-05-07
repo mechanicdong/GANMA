@@ -9,23 +9,21 @@ import Foundation
 import UIKit
 import RxSwift
 
-
-class EmailSignUpViewController: UIViewController {
+class EmailSignInViewController: UIViewController {
     let disposeBag = DisposeBag()
-    let viewModel = EmailSignUpViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bind(viewModel)
+        let emailSignUpViewModel = EmailSignUpViewModel()
+        bind(emailSignUpViewModel)
         attribute()
         layout()
     }
     
-    //let enterEmailVC = EnterEmailViewController()
     private lazy var loginInfo: UILabel = {
         let loginInfo = UILabel()
-        loginInfo.text = "등록정보"
+        loginInfo.text = "로그인"
         
         return loginInfo
     }()
@@ -47,27 +45,17 @@ class EmailSignUpViewController: UIViewController {
         return pwTextField
     }()
     
-    private lazy var errorLabel: UILabel = {
-        let errorLabel = UILabel()
-        errorLabel.textColor = .systemRed
-        errorLabel.textAlignment = .center
-        errorLabel.numberOfLines = 0
-        errorLabel.text = "이메일/비밀번호 조건을 확인해 주세요"
+    private lazy var loginButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.textColor = .white
+        button.setTitle("확인", for: .normal)
+        button.backgroundColor = .systemYellow
+        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
+        button.layer.cornerRadius = 10
+        button.alpha = 0.3
+        button.isEnabled = false
         
-        return errorLabel
-    }()
-    
-    private lazy var nextButton: UIButton = {
-        let nextButton = UIButton()
-        nextButton.titleLabel?.textColor = .white
-        nextButton.setTitle("확인", for: .normal)
-        nextButton.backgroundColor = .systemYellow
-        nextButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
-        nextButton.layer.cornerRadius = 10
-        nextButton.alpha = 0.3
-        nextButton.isEnabled = false
-        
-        return nextButton
+        return button
     }()
     
     private lazy var stackView: UIStackView = {
@@ -93,40 +81,24 @@ class EmailSignUpViewController: UIViewController {
             .bind(to: viewModel.pwTextInputted)
             .disposed(by: disposeBag)
         
+        loginButton.rx.tap
+            .subscribe(onNext: {
+                viewModel.login()
+            })
+            .disposed(by: disposeBag)
+        
         //정합성 체크하여 버튼 활성화
         viewModel.isValid()
             .observe(on: MainScheduler.instance)
-            .bind(to: nextButton.rx.isEnabled)
+            .bind(to: loginButton.rx.isEnabled)
             .disposed(by: disposeBag)
-        
-//        viewModel.isValid()
-//            .observe(on: MainScheduler.instance)
-//            .bind(to: errorLabel.rx.isHidden)
-//            .disposed(by: disposeBag)
         
         viewModel.isValid()
             .observe(on: MainScheduler.instance)
             .map { $0 ? 1 : 0.3 }
-            .bind(to: nextButton.rx.alpha)
+            .bind(to: loginButton.rx.alpha)
             .disposed(by: disposeBag)
-        
-        //Firebase email/pw authorization
-        nextButton.rx.tap
-            .subscribe(
-                onNext: {
-                    viewModel.createUser()
-                    //self?.dismiss(animated: true)
-                })
-            .disposed(by: disposeBag)
-        
-        viewModel.errorInfo
-            .asObservable()
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: {
-                self.errorLabel.text = $0
-            })
-            .disposed(by: disposeBag)
-        
+
         viewModel.loginValid
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] in
@@ -135,15 +107,14 @@ class EmailSignUpViewController: UIViewController {
                 } else { return }
             })
             .disposed(by: disposeBag)
-        
     }
     
     private func attribute() {
         view.addSubview(stackView)
-        [loginInfo, emailTextField, pwTextField, errorLabel].forEach {
+        [loginInfo, emailTextField, pwTextField].forEach {
             stackView.addArrangedSubview($0)
         }
-        view.addSubview(nextButton)
+        view.addSubview(loginButton)
     }
     
     private func layout() {
@@ -152,11 +123,11 @@ class EmailSignUpViewController: UIViewController {
             $0.width.equalTo(view.snp.width)
             $0.leading.equalToSuperview().inset(20)
         }
-        nextButton.snp.makeConstraints {
+        loginButton.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.width.equalTo(100)
             $0.height.equalTo(50)
         }
     }
-
+    
 }

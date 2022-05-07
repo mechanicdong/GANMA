@@ -28,7 +28,6 @@ struct EmailSignUpViewModel {
 //            }
 //    }
 
-    
     init() {
         
     }
@@ -65,7 +64,21 @@ struct EmailSignUpViewModel {
         
     }
     
-    func loginUser(withEmail email: String, password: String) {
+    func login() {
+        let email = EmailTextInputted.value
+        let password = pwTextInputted.value
+        Auth.auth().signIn(withEmail: email, password: password) { _, error in
+            if let error = error {
+                errorInfo.accept(error.localizedDescription)
+                loginValid.onNext(false)
+            } else {
+                loginValid.onNext(true)
+                emailInfo.accept(email)
+            }
+        }
+    }
+    
+    func loginUser(withEmail email: String, password: String) -> BehaviorSubject<Bool> {
         Auth.auth().signIn(withEmail: email, password: password) { _, error in
             if let error = error {
                 errorInfo.accept(error.localizedDescription)
@@ -74,6 +87,7 @@ struct EmailSignUpViewModel {
                 loginValid.onNext(true)
             }
         }
+        return loginValid
     }
     
     func getUser() -> BehaviorRelay<String> {
