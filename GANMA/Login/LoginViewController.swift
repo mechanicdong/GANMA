@@ -9,12 +9,13 @@ import Foundation
 import UIKit
 import AuthenticationServices //for apple login framework
 import GoogleSignIn
+import Firebase
 
 class LoginViewController: UIViewController, GIDSignInDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //close view after google sign in success
         GIDSignIn.sharedInstance().delegate = self
         
         setNavigation()
@@ -29,11 +30,22 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         GIDSignIn.sharedInstance().presentingViewController = self
     }
     
+    //close view after google sign in success
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
-            print("\(error.localizedDescription)")
+            print("Error: Google Sign In \(error.localizedDescription)")
+            return
         } else {
             self.dismiss(animated: true, completion: nil)
+        }
+
+        guard let authentication = user.authentication else { return }
+        //credential = 구글 ID Access Token 부여 받음
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+        //받은 토큰을 Firebase 인증 정보에 등록
+        Auth.auth().signIn(with: credential) { _, _ in
+            //self?.showMainViewController()
+            print("구글로그인 들옴")
         }
     }
     
@@ -49,17 +61,17 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         return emailLogInButton
     }()
     
-//    private lazy var googleLogInButton: UIButton = {
-//        let googleLogInButton = UIButton()
+    private lazy var googleLogInButton: UIButton = {
+        let googleLogInButton = UIButton()
+
+        return googleLogInButton
+    }()
+    
+//    private lazy var googleLogInButton: GIDSignInButton = {
+//        let googleLogInButton = GIDSignInButton()
 //
 //        return googleLogInButton
 //    }()
-    
-    private lazy var googleLogInButton: GIDSignInButton = {
-        let googleLogInButton = GIDSignInButton()
-        
-        return googleLogInButton
-    }()
     
     private lazy var appleLogInButton: UIButton = {
         let appleLogInButton = UIButton()
@@ -105,8 +117,8 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         emailLogInButton.setTitle("이메일/비밀번호로 계속하기", for: .normal)
         emailLogInButton.addTarget(self, action: #selector(emailLogInButtonTapped), for: .touchDown)
         
-//        googleLogInButton.setTitle("구글계정으로 계속하기", for: .normal)
-//        googleLogInButton.setImage(UIImage(named: "logo_google"), for: .normal)
+        googleLogInButton.setTitle("구글계정으로 계속하기", for: .normal)
+        googleLogInButton.setImage(UIImage(named: "logo_google"), for: .normal)
         googleLogInButton.addTarget(self, action: #selector(googleLogInButtonTapped), for: .touchDown)
         
         appleLogInButton.setTitle("애플계정으로 계속하기", for: .normal)
@@ -114,8 +126,6 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         appleLogInButton.addTarget(self, action: #selector(appleLogInButtonTapped), for: .touchDown)
     }
     @objc func emailLogInButtonTapped() {
-        //let viewController = EnterEmailViewController()
-        print("Tapped!!!")
         let viewController = EnterEmailViewController()
         self.navigationController?.pushViewController(viewController, animated: true)
     }
