@@ -8,15 +8,33 @@
 import Foundation
 import UIKit
 import AuthenticationServices //for apple login framework
+import GoogleSignIn
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, GIDSignInDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         
+        GIDSignIn.sharedInstance().delegate = self
+        
+        setNavigation()
         attribute()
         layout()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //Google Sign In
+        GIDSignIn.sharedInstance().presentingViewController = self
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if let error = error {
+            print("\(error.localizedDescription)")
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     private lazy var appleSignInButton: UIStackView = {
@@ -31,8 +49,14 @@ class LoginViewController: UIViewController {
         return emailLogInButton
     }()
     
-    private lazy var googleLogInButton: UIButton = {
-        let googleLogInButton = UIButton()
+//    private lazy var googleLogInButton: UIButton = {
+//        let googleLogInButton = UIButton()
+//
+//        return googleLogInButton
+//    }()
+    
+    private lazy var googleLogInButton: GIDSignInButton = {
+        let googleLogInButton = GIDSignInButton()
         
         return googleLogInButton
     }()
@@ -48,14 +72,29 @@ class LoginViewController: UIViewController {
         logInStackView.axis = .vertical
         logInStackView.alignment = .center
         logInStackView.distribution = .fillEqually
-        logInStackView.backgroundColor = .black
+        logInStackView.backgroundColor = .gray
         //스택뷰 마진(버튼 테두리 가림 현상)
         logInStackView.isLayoutMarginsRelativeArrangement = true
         logInStackView.layoutMargins = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         
         return logInStackView
     }()
-
+    
+    private lazy var leftBarButtonItem: UIBarButtonItem = {
+        let button = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeLoginVC))
+        
+        return button
+    }()
+    
+    @objc func closeLoginVC() {
+        self.dismiss(animated: true)
+    }
+    
+    private func setNavigation() {
+        view.backgroundColor = .white
+        self.navigationItem.title = "무료 회원 가입"
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
+    }
     
     private func attribute() {
         view.addSubview(logInStackView)
@@ -66,8 +105,8 @@ class LoginViewController: UIViewController {
         emailLogInButton.setTitle("이메일/비밀번호로 계속하기", for: .normal)
         emailLogInButton.addTarget(self, action: #selector(emailLogInButtonTapped), for: .touchDown)
         
-        googleLogInButton.setTitle("구글계정으로 계속하기", for: .normal)
-        googleLogInButton.setImage(UIImage(named: "logo_google"), for: .normal)
+//        googleLogInButton.setTitle("구글계정으로 계속하기", for: .normal)
+//        googleLogInButton.setImage(UIImage(named: "logo_google"), for: .normal)
         googleLogInButton.addTarget(self, action: #selector(googleLogInButtonTapped), for: .touchDown)
         
         appleLogInButton.setTitle("애플계정으로 계속하기", for: .normal)
@@ -75,12 +114,14 @@ class LoginViewController: UIViewController {
         appleLogInButton.addTarget(self, action: #selector(appleLogInButtonTapped), for: .touchDown)
     }
     @objc func emailLogInButtonTapped() {
+        //let viewController = EnterEmailViewController()
+        print("Tapped!!!")
         let viewController = EnterEmailViewController()
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc func googleLogInButtonTapped() {
-        
+        GIDSignIn.sharedInstance().signIn() //구글에게 권한 위임
     }
     
     @objc func appleLogInButtonTapped() {
