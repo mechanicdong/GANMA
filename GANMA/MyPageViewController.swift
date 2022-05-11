@@ -8,8 +8,10 @@
 import Foundation
 import UIKit
 import RxSwift
+import GoogleSignIn
+import Firebase
 
-class MyPageViewController: UIViewController {
+class MyPageViewController: UIViewController, GIDSignInDelegate {
     let disposeBag = DisposeBag()
     let emailSignUpViewModel = EmailSignUpViewModel()
     override func viewDidLoad() {
@@ -20,6 +22,20 @@ class MyPageViewController: UIViewController {
         bind(EmailSignUpViewModel())
         setAttribute()
         setLayout()
+        
+        GIDSignIn.sharedInstance().delegate = self
+        
+        if let user = GIDSignIn.sharedInstance().currentUser {
+            DispatchQueue.global().async {
+                if let url = user.profile.imageURL(withDimension: 120),
+                   let data = NSData(contentsOf: url) {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.myImage.image = UIImage(data: data as Data)
+                    }
+                }
+            }
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -27,9 +43,14 @@ class MyPageViewController: UIViewController {
         
     }
     
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+
+        
+    }
+    
     private lazy var myImage: UIImageView = {
         let myImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        myImage.image = UIImage(named: "logo_google")
+        //myImage.image = UIImage(named: "logo_google")
         
         return myImage
     }()
@@ -79,6 +100,17 @@ class MyPageViewController: UIViewController {
         return signoutButton
     }()
     
+    private lazy var accountButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Account", for: .normal)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.layer.borderColor = UIColor.orange.cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 10
+        
+        return button
+    }()
+    
     //TODO: 로그인 시 닉네임에 이메일주소 가져오기
     func bind(_ viewModel: EmailSignUpViewModel) {
         viewModel.getUser()
@@ -92,6 +124,17 @@ class MyPageViewController: UIViewController {
             }
             .bind(to: viewModel.logout)
             .disposed(by: disposeBag)
+
+//        viewModel.loginValid
+//            .subscribe(onNext: { [weak self] a in
+//                if a {
+//                    self?.accountButton.isEnabled = true
+//                } else {
+//                    self?.accountButton.isEnabled = false
+//                }
+//                print("\(self?.accountButton.isEnabled)")
+//            })
+//            .disposed(by: disposeBag)
         
     }
     
@@ -103,10 +146,11 @@ class MyPageViewController: UIViewController {
                 preferredStyle: .alert
             )
             alert.addAction(UIAlertAction(
-                title: "Yes", style: .destructive, handler: { [weak self]_ in
+                title: "Yes", style: .destructive, handler: { _ in
                     observer.onNext(())
                     let viewModel = EmailSignUpViewModel()
                     viewModel.logoutted()
+                    viewModel.loginValid.onNext(false)
                     print("로그아웃 성공?")
                     observer.onCompleted()
                 }
@@ -123,17 +167,24 @@ class MyPageViewController: UIViewController {
     }
     
     private func setAttribute() {
-        [myImage, welcomeLabel, nickNameLabel, lineView, signupButton, signoutButton].forEach {
+        [myImage, welcomeLabel, nickNameLabel, lineView, signupButton, signoutButton, accountButton].forEach {
             view.addSubview($0)
         }
         signupButton.addTarget(self, action: #selector(moveToLoginVC), for: .touchDown)
-            
+        accountButton.addTarget(self, action: #selector(moveToAccountVC), for: .touchDown)
+        
     }
     
     @objc func moveToLoginVC() {
         //let vc = LoginViewController()
         let vc = UINavigationController(rootViewController: LoginViewController())
         //navigationController?.pushViewController(vc, animated: true)
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
+    }
+    
+    @objc func moveToAccountVC() {
+        let vc = UINavigationController(rootViewController: AccountViewController())
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
     }
@@ -176,6 +227,11 @@ class MyPageViewController: UIViewController {
         signoutButton.snp.makeConstraints {
             $0.top.equalTo(signupButton.snp.bottom).offset(15)
             $0.leading.trailing.equalToSuperview().inset(50)
+        }
+        
+        accountButton.snp.makeConstraints {
+            $0.top.equalTo(signoutButton.snp.bottom).offset(15)
+            $0.left.trailing.equalToSuperview().inset(50)
         }
     }
 }
