@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 import RxSwift
+import RxCocoa
+import RxViewController
 import GoogleSignIn
 import Firebase
 
@@ -20,27 +22,20 @@ class MyPageViewController: UIViewController, GIDSignInDelegate {
         view.backgroundColor = .white
         navigationItem.title = "MyPage"
         bind(EmailSignUpViewModel())
+        EdittedBind(MyPageViewModel())
         setAttribute()
         setLayout()
         
         GIDSignIn.sharedInstance().delegate = self
-        
-        if let user = GIDSignIn.sharedInstance().currentUser {
-            DispatchQueue.global().async {
-                if let url = user.profile.imageURL(withDimension: 120),
-                   let data = NSData(contentsOf: url) {
-                    DispatchQueue.main.async { [weak self] in
-                        self?.myImage.image = UIImage(data: data as Data)
-                    }
-                }
-            }
-        }
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        //화면 Dismiss 된 후(로그인, 로그아웃 후) view data reload
+        bind(EmailSignUpViewModel())
+        EdittedBind(MyPageViewModel())
     }
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
@@ -135,6 +130,31 @@ class MyPageViewController: UIViewController, GIDSignInDelegate {
 //                print("\(self?.accountButton.isEnabled)")
 //            })
 //            .disposed(by: disposeBag)
+        
+    }
+    
+    func EdittedBind(_ viewModel: MyPageViewModel) {
+        //--------------------
+        //INPUT
+        //--------------------
+        
+        //처음 로딩할 때
+        let firstLoad = rx.viewWillAppear
+            .take(1)
+            .map { _ in () }
+           
+        firstLoad.bind(to: viewModel.imageObj)
+            .disposed(by: disposeBag)
+        
+        //--------------------
+        //OUTPUT
+        //--------------------
+        viewModel.outImage
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] data in
+                self?.myImage.image = UIImage(data: data as Data)
+            })
+            .disposed(by: disposeBag)
         
     }
     
