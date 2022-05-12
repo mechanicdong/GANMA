@@ -36,6 +36,7 @@ class MyPageViewController: UIViewController, GIDSignInDelegate {
         //화면 Dismiss 된 후(로그인, 로그아웃 후) view data reload
         bind(EmailSignUpViewModel())
         EdittedBind(MyPageViewModel())
+        
     }
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
@@ -45,7 +46,7 @@ class MyPageViewController: UIViewController, GIDSignInDelegate {
     
     private lazy var myImage: UIImageView = {
         let myImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        //myImage.image = UIImage(named: "logo_google")
+        myImage.image = UIImage()
         
         return myImage
     }()
@@ -120,17 +121,6 @@ class MyPageViewController: UIViewController, GIDSignInDelegate {
             .bind(to: viewModel.logout)
             .disposed(by: disposeBag)
 
-//        viewModel.loginValid
-//            .subscribe(onNext: { [weak self] a in
-//                if a {
-//                    self?.accountButton.isEnabled = true
-//                } else {
-//                    self?.accountButton.isEnabled = false
-//                }
-//                print("\(self?.accountButton.isEnabled)")
-//            })
-//            .disposed(by: disposeBag)
-        
     }
     
     func EdittedBind(_ viewModel: MyPageViewModel) {
@@ -140,22 +130,36 @@ class MyPageViewController: UIViewController, GIDSignInDelegate {
         
         //처음 로딩할 때
         let firstLoad = rx.viewWillAppear
-            .take(1)
+            //.take(1)
             .map { _ in () }
-           
+        
+        //GID Profile Image set
         firstLoad.bind(to: viewModel.imageObj)
+            .disposed(by: disposeBag)
+        
+        //Account Button Enable/Hidden set
+        firstLoad.bind(to: viewModel.accountBtnObj)
             .disposed(by: disposeBag)
         
         //--------------------
         //OUTPUT
         //--------------------
+        //GID Profile get
         viewModel.outImage
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] data in
-                self?.myImage.image = UIImage(data: data as Data)
+                self?.myImage.image = UIImage(data: data as Data) ?? UIImage()
             })
             .disposed(by: disposeBag)
         
+        //Account Button Enable/Hidden get
+        viewModel.outAccountButton
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isEnable in
+                self?.accountButton.isEnabled = isEnable
+                self?.accountButton.isHidden = !isEnable
+            })
+            .disposed(by: disposeBag)
     }
     
     func areYouSure() -> Observable<Void> {
