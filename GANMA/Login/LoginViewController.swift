@@ -11,15 +11,31 @@ import AuthenticationServices //for apple login framework(=AS)
 import GoogleSignIn
 import Firebase
 import CryptoKit //for nonce hash value
+import FirebaseDatabase
 
-class LoginViewController: UIViewController, GIDSignInDelegate {
+class LoginViewController: UIViewController {
     
     private var currentNonce: String?
+    
+    private var loginObserver: NSObjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //close view after google sign in success
-        GIDSignIn.sharedInstance().delegate = self
+        //GIDSignIn.sharedInstance().delegate = self
+        
+        //Google Sign In
+        GIDSignIn.sharedInstance().presentingViewController = self
+        
+        loginObserver = NotificationCenter.default.addObserver(
+            forName: Notification.Name.didLoginNotification,
+            object: nil,
+            queue: .main,
+            using: { [weak self] _ in
+                guard let self = self else { return }
+                //self.dismiss(animated: true, completion: nil)
+                self.navigationController?.dismiss(animated: true, completion: nil)
+            })
         
         setNavigation()
         attribute()
@@ -28,29 +44,56 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        //Google Sign In
-        GIDSignIn.sharedInstance().presentingViewController = self
+
+//        //Google Sign In
+//        GIDSignIn.sharedInstance().presentingViewController = self
+    }
+
+    deinit {
+        if let observer = loginObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
     
     //close view after google signIn success and add to Firebase 
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        if let error = error {
-            print("Error: Google Sign In \(error.localizedDescription)")
-            return
-        } else {
-            self.dismiss(animated: true, completion: nil)
-        }
-
-        guard let authentication = user.authentication else { return }
-        //credential = 구글 ID Access Token 부여 받음
-        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
-        //받은 토큰을 Firebase 인증 정보에 등록
-        Auth.auth().signIn(with: credential) { _, _ in
-            //self?.showMainViewController()
-            print("구글로그인 들옴")
-        }
-    }
+//    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+////        if let error = error {
+////            print("Error: Google Sign In \(error.localizedDescription)")
+////            return
+////        } else {
+////            let viewModel = EmailSignUpViewModel()
+////            viewModel.loginValid.onNext(true)
+////            self.dismiss(animated: true, completion: nil)
+////        }
+////
+////        guard let authentication = user.authentication else { return }
+////        //credential = 구글 ID Access Token 부여 받음
+////        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
+////                                                       accessToken: authentication.accessToken)
+////
+////        //Database 동일 계정 확인
+////        guard let email = user.profile.email,
+////              let givenName = user.profile.givenName
+////        else {
+////            return
+////        }
+////
+////        DatabaseManager.shared.userExists(with: email) { exists in
+////            if !exists {
+////                //insert to database
+////                DatabaseManager.shared.insertUser(with: GanmaAppUser(nickName: "\(givenName)", emailAddress: email))
+////            }
+////        }
+////
+////        //받은 토큰을 Firebase 인증 정보에 등록
+////        Auth.auth().signIn(with: credential) { authResult, error in
+////            guard authResult != nil, error != nil else {
+////                print("failed to log in with google credencial")
+////                return
+////            }
+////            print("successfully signed in with google credencial")
+////        }
+//    }
     
     private lazy var appleSignInButton: UIStackView = {
         let appleSignInButton = UIStackView()
@@ -206,7 +249,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
         }
     }
 }
-
 
 //Apple Sign in create nonce
 extension LoginViewController {

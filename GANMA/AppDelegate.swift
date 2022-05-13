@@ -15,17 +15,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     //구글 로그인 화면에서 구글에서 제공한 URL로 인증한 후 전달된 구글 로그인값을 처리
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
-            print("Error Google Sign In : \(error.localizedDescription)")
+            print("Error: Google Sign In \(error.localizedDescription)")
             return
+        } else {
+            let viewModel = EmailSignUpViewModel()
+            viewModel.loginValid.onNext(true)
+            //self.dismiss(animated: true, completion: nil)
         }
+
         guard let authentication = user.authentication else { return }
         //credential = 구글 ID Access Token 부여 받음
-        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
-        //받은 토큰을 Firebase 인증 정보에 등록
-        Auth.auth().signIn(with: credential) { [weak self] _, _ in
-            //self?.showMainViewController()
-            print("구글로그인 들옴")
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
+                                                       accessToken: authentication.accessToken)
+        
+        //Database 동일 계정 확인
+        guard let email = user.profile.email,
+              let givenName = user.profile.givenName
+        else { return }
+
+        DatabaseManager.shared.userExists(with: email) { exists in
+            if !exists {
+                //insert to database
+                DatabaseManager.shared.insertUser(with: GanmaAppUser(nickName: givenName, emailAddress: email))
+            }
         }
+        
+        //받은 토큰을 Firebase 인증 정보에 등록
+        Auth.auth().signIn(with: credential) { authResult, error in
+            print("successfully signed in with google credencial")
+            NotificationCenter.default.post(name: .didLoginNotification, object: nil)
+        }
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        print("Google User was disconnected!")
     }
     
     //show vc after google sign in, but not used this time
