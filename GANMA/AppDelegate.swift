@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     //구글 로그인 화면에서 구글에서 제공한 URL로 인증한 후 전달된 구글 로그인값을 처리
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        //close view after google signIn success and add to Firebase 
         if let error = error {
             print("Error: Google Sign In \(error.localizedDescription)")
             return
@@ -36,7 +37,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         DatabaseManager.shared.userExists(with: email) { exists in
             if !exists {
                 //insert to database
-                DatabaseManager.shared.insertUser(with: GanmaAppUser(nickName: givenName, emailAddress: email))
+                let chatUser = GanmaAppUser(nickName: givenName, emailAddress: email)
+                DatabaseManager.shared.insertUser(with: chatUser) { success in
+                    if success {
+                        //upload image
+                        
+                    }
+                }
             }
         }
         
