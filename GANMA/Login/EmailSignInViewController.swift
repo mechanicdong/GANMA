@@ -8,9 +8,11 @@
 import Foundation
 import UIKit
 import RxSwift
+import JGProgressHUD
 
 class EmailSignInViewController: UIViewController {
     let disposeBag = DisposeBag()
+    let spinner = JGProgressHUD(style: .dark)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,11 +84,14 @@ class EmailSignInViewController: UIViewController {
             .disposed(by: disposeBag)
         
         loginButton.rx.tap
-            .subscribe(onNext: {
+            .subscribe(onNext: { [weak self] in
                 viewModel.login()
+                DispatchQueue.main.async {
+                    self?.spinner.show(in: self?.view ?? UIView())
+                }
             })
             .disposed(by: disposeBag)
-        
+                
         //정합성 체크하여 버튼 활성화
         viewModel.isValid()
             .observe(on: MainScheduler.instance)
@@ -103,6 +108,7 @@ class EmailSignInViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] in
                 if $0 {
+                    self?.spinner.dismiss(animated: true)
                     self?.dismiss(animated: true)
                 } else { return }
             })
