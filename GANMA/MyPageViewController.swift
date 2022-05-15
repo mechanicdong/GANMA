@@ -13,7 +13,7 @@ import RxViewController
 import GoogleSignIn
 import Firebase
 
-class MyPageViewController: UIViewController, GIDSignInDelegate {
+class MyPageViewController: UIViewController {
     let disposeBag = DisposeBag()
     let emailSignUpViewModel = EmailSignUpViewModel()
     override func viewDidLoad() {
@@ -26,7 +26,7 @@ class MyPageViewController: UIViewController, GIDSignInDelegate {
         setAttribute()
         setLayout()
         
-        GIDSignIn.sharedInstance().delegate = self
+        //GIDSignIn.sharedInstance().delegate = self
         
     }
     
@@ -39,10 +39,10 @@ class MyPageViewController: UIViewController, GIDSignInDelegate {
         
     }
     
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-
-        
-    }
+//    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+//
+//
+//    }
     
     private lazy var myImage: UIImageView = {
         let myImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
@@ -100,6 +100,17 @@ class MyPageViewController: UIViewController, GIDSignInDelegate {
         let button = UIButton()
         button.setTitle("Account", for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
+        button.layer.borderColor = UIColor.orange.cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 10
+        
+        return button
+    }()
+    
+    private lazy var chatButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Chat", for: .normal)
+        button.setTitleColor(UIColor.blue, for: .normal)
         button.layer.borderColor = UIColor.orange.cgColor
         button.layer.borderWidth = 1
         button.layer.cornerRadius = 10
@@ -169,6 +180,7 @@ class MyPageViewController: UIViewController, GIDSignInDelegate {
                 message: nil,
                 preferredStyle: .alert
             )
+            
             alert.addAction(UIAlertAction(
                 title: "Yes", style: .destructive, handler: { _ in
                     observer.onNext(())
@@ -179,6 +191,7 @@ class MyPageViewController: UIViewController, GIDSignInDelegate {
                     observer.onCompleted()
                 }
             ))
+            
             alert.addAction(UIAlertAction(
                 title: "No", style: .default, handler: { _ in
                     observer.onCompleted()
@@ -191,12 +204,12 @@ class MyPageViewController: UIViewController, GIDSignInDelegate {
     }
     
     private func setAttribute() {
-        [myImage, welcomeLabel, nickNameLabel, lineView, signupButton, signoutButton, accountButton].forEach {
+        [myImage, welcomeLabel, nickNameLabel, lineView, signupButton, signoutButton, accountButton, chatButton].forEach {
             view.addSubview($0)
         }
         signupButton.addTarget(self, action: #selector(moveToLoginVC), for: .touchDown)
         accountButton.addTarget(self, action: #selector(moveToAccountVC), for: .touchDown)
-        
+        chatButton.addTarget(self, action: #selector(moveToChatVC), for: .touchUpInside)
     }
     
     @objc func moveToLoginVC() {
@@ -211,6 +224,12 @@ class MyPageViewController: UIViewController, GIDSignInDelegate {
         let vc = UINavigationController(rootViewController: AccountViewController())
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
+    }
+    
+    @objc func moveToChatVC() {
+        let vc = ConversationsTabBarController()
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
     
     private func setLayout() {
@@ -255,7 +274,12 @@ class MyPageViewController: UIViewController, GIDSignInDelegate {
         
         accountButton.snp.makeConstraints {
             $0.top.equalTo(signoutButton.snp.bottom).offset(15)
-            $0.left.trailing.equalToSuperview().inset(50)
+            $0.leading.trailing.equalToSuperview().inset(50)
+        }
+        
+        chatButton.snp.makeConstraints {
+            $0.top.equalTo(accountButton.snp.bottom).offset(15)
+            $0.leading.trailing.equalToSuperview().inset(50)
         }
     }
 }
